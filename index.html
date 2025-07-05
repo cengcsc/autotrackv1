@@ -40,6 +40,133 @@
       max-width: 80%;
     }
 
+    #motivation {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #888;
+      font-style: italic;
+      max-width: 80%;
+    }
+
+    iframe {
+      border: none;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <img src="https://i.pinimg.com/originals/63/eb/c0/63ebc09daae37481cbdc0aa734202609.gif" alt="Loading..." />
+    <p id="loadingText">Loading, please wait...</p>
+    <p id="motivation">Hang in there, you're doing great! 🐾</p>
+  </div>
+
+  <iframe 
+    id="contentFrame"
+    src="https://script.google.com/macros/s/AKfycbylXyWeY2iw4aAZvaJ6LpQs1ybwSG5uo1Vp7j5VhtU7uLbPPEUmmGNsa0lEIOtzBDxAWQ/exec"
+    allowfullscreen>
+  </iframe>
+
+  <script>
+    const funnyLines = [
+      "Summoning the cat gods...",
+      "Untangling yarn of data...",
+      "Petting the server cat for good luck...",
+      "Scratching the loading post...",
+      "Cat is chasing the loading mouse...",
+      "Meow-mentarily fetching your data...",
+      "Bribing the cat with tuna...",
+      "Cat is staring at the spinning circle...",
+      "Litter-ally almost there...",
+      "Compiling fur-mation...",
+      "Stretching whiskers before pouncing...",
+      "Making biscuits on the payment files..."
+    ];
+
+    const motivationalLines = [
+      "Hang in there, you're doing great! 🐾",
+      "Every step counts, even the small ones.",
+      "You’re closer than you think!",
+      "Stay pawsitive — progress is loading.",
+      "Believe in yourself like a cat believes it's the boss.",
+      "You’ve got this! 🐱✨"
+    ];
+
+    document.getElementById("loadingText").textContent =
+      funnyLines[Math.floor(Math.random() * funnyLines.length)];
+    document.getElementById("motivation").textContent =
+      motivationalLines[Math.floor(Math.random() * motivationalLines.length)];
+
+    let iframeLoaded = false;
+    let minDelayPassed = false;
+
+    const iframe = document.getElementById("contentFrame");
+
+    iframe.onload = () => {
+      iframeLoaded = true;
+      if (minDelayPassed) {
+        showIframe();
+      }
+    };
+
+    setTimeout(() => {
+      minDelayPassed = true;
+      if (iframeLoaded) {
+        showIframe();
+      }
+    }, 3000);
+
+    function showIframe() {
+      document.getElementById("loader").style.display = "none";
+      iframe.style.display = "block";
+    }
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BUCENG-CSC Fee Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #loader img {
+      width: 120px;
+      height: auto;
+    }
+
+    #loader p {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #555;
+      max-width: 80%;
+    }
+
     iframe {
       border: none;
       width: 100vw;
