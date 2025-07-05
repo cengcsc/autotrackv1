@@ -57,8 +57,7 @@
   <iframe 
     id="contentFrame"
     src="https://script.google.com/macros/s/AKfycbylXyWeY2iw4aAZvaJ6LpQs1ybwSG5uo1Vp7j5VhtU7uLbPPEUmmGNsa0lEIOtzBDxAWQ/exec"
-    allowfullscreen
-    onload="hideLoader()">
+    allowfullscreen>
   </iframe>
 
   <script>
@@ -77,13 +76,32 @@
       "Making biscuits on the payment files..."
     ];
 
-    // Pick a random line on load
-    const randomLine = funnyLines[Math.floor(Math.random() * funnyLines.length)];
-    document.getElementById("loadingText").textContent = randomLine;
+    document.getElementById("loadingText").textContent =
+      funnyLines[Math.floor(Math.random() * funnyLines.length)];
 
-    function hideLoader() {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('contentFrame').style.display = 'block';
+    let iframeLoaded = false;
+    let minDelayPassed = false;
+
+    const iframe = document.getElementById("contentFrame");
+
+    iframe.onload = () => {
+      iframeLoaded = true;
+      if (minDelayPassed) {
+        showIframe();
+      }
+    };
+
+    // Minimum 3 second delay
+    setTimeout(() => {
+      minDelayPassed = true;
+      if (iframeLoaded) {
+        showIframe();
+      }
+    }, 3000);
+
+    function showIframe() {
+      document.getElementById("loader").style.display = "none";
+      iframe.style.display = "block";
     }
   </script>
 </body>
