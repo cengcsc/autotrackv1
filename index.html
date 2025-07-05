@@ -94,36 +94,37 @@
       "You’ve got this! 🐱✨"
     ];
 
+    // Set random lines
     document.getElementById("loadingText").textContent =
       funnyLines[Math.floor(Math.random() * funnyLines.length)];
     document.getElementById("motivation").textContent =
       motivationalLines[Math.floor(Math.random() * motivationalLines.length)];
 
-    const iframe = document.getElementById("contentFrame");
+    // Flags
     let iframeLoaded = false;
-    let randomDelayPassed = false;
+    let delayPassed = false;
+
+    const iframe = document.getElementById("contentFrame");
 
     // Random delay between 4 and 7 seconds
-    const delay = Math.floor(Math.random() * 3000) + 4000; // 4000 to 7000 ms
-    console.log(`Delaying iframe reveal for ${delay}ms`);
+    const delay = Math.floor(Math.random() * 3000) + 4000;
+    console.log(`Delaying iframe for ${delay}ms`);
 
     setTimeout(() => {
-      randomDelayPassed = true;
-      if (iframeLoaded) {
-        showIframe();
-      }
+      delayPassed = true;
+      checkAndShowIframe();
     }, delay);
 
     iframe.onload = () => {
       iframeLoaded = true;
-      if (randomDelayPassed) {
-        showIframe();
-      }
+      checkAndShowIframe();
     };
 
-    function showIframe() {
-      document.getElementById("loader").style.display = "none";
-      iframe.style.display = "block";
+    function checkAndShowIframe() {
+      if (iframeLoaded && delayPassed) {
+        document.getElementById("loader").style.display = "none";
+        iframe.style.display = "block";
+      }
     }
   </script>
 </body>
