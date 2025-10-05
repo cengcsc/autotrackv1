@@ -1,11 +1,11 @@
-# BUCENG-CSC AutoTrack System Documentation
+# BUCENG-CSC AutoTrack System Documentation 🚀🎓
 
 **License:**  
 This project is released under the MIT License. See the end of this document for details.
 
----
+***
 
-## Table of Contents
+## Table of Contents 📑
 
 - [Overview](#overview)
 - [System Components](#system-components)
@@ -23,36 +23,36 @@ This project is released under the MIT License. See the end of this document for
 - [Example Result Object (from backend)](#example-result-object-from-backend)
 - [Notes and Limitations](#notes-and-limitations)
 - [License](#license)
+- [Visualizing the System Flow](#visualizing-the-system-flow)
 
----
+***
 
-## Overview
+## Overview ✨
 
-The BUCENG-CSC AutoTrack system is a Google Apps Script web application for Bicol University College of Engineering students to check the College Student Council (CSC) fee payment status for AY 2025–2026. The system works with departmental sheets in a Google Spreadsheet and a user-friendly web frontend.
+The BUCENG-CSC AutoTrack system is a Google Apps Script web application for Bicol University College of Engineering students to check their College Student Council (CSC) fee payment status for AY 2025–2026. The system uses departmental sheets in Google Sheets and a user-friendly web frontend.
 
----
+***
 
-## System Components
+## System Components 🧩
 
-### Backend (Google Apps Script)
+### Backend (Google Apps Script) 📝
 
 - **doGet(e):** Serves the HTML frontend.  
-- **getPaymentStatus(studentId):** Validates, searches across department sheets, and returns fee status details.  
-- **validateLogin(username, password):** Authenticates users by checking a "CREDENTIALS" sheet.  
-- **checkUsernameExists(username):** Looks for a username in the "CREDENTIALS" sheet.  
-- **Debug helpers:** Sheet and record review tools.
+- **getPaymentStatus(studentId):** Validates input, searches department sheets, and returns payment status data.  
+- **validateLogin(username, password):** Checks credentials against "CREDENTIALS" sheet (optional).  
+- **checkUsernameExists(username):** Verifies if a username exists (optional).  
+- **Debug helpers:** Tools to explore sheet structure and test data.
 
-### Frontend (HTML, CSS, JavaScript)
+### Frontend (HTML, CSS, JavaScript) 🖥️
 
-- Inputs Student ID, displays result via banners, payment history, and feedback animations.  
-- Communicates with Google Apps Script backend via `google.script.run`.  
-- Responsive UI with dark mode and info panel.
+- Input field for Student ID.  
+- Displays results with status banners, history, animations.  
+- Communicates asynchronously with backend via `google.script.run`.  
+- Includes dark mode toggle and informative banners.
 
----
+***
 
-## Spreadsheet Structure & Column Mapping
-
-Your Google Sheets file must contain the following column mappings (row numbers start at 1):
+## Spreadsheet Structure & Column Mapping 📊
 
 | Letter | Index | Content                        |
 | ------ | ----- | ----------------------------- |
@@ -66,161 +66,122 @@ Your Google Sheets file must contain the following column mappings (row numbers 
 | K      | 10    | AY 2024-2025 Payment Status   |
 | M      | 12    | AY 2025-2026 Payment Status   |
 
-**Headers occupy rows 1–5.** Data begins at row 6.
+Headers are in rows 1–5; data starts at row 6. Ensure department sheets are named according to your organization's abbreviations (e.g., "EE" for Electrical Engineering).
 
-Each department must have a separate sheet named after its abbreviation (e.g., "EE" for Electrical Engineering).
+***
 
----
+## Payment Status Logic 🔍
 
-## Payment Status Logic
+1. 🧑‍🎓 Student enters their Student ID.  
+2. 🔄 System normalizes input and searches across all department sheets from row 6 down for matches in column B.  
+3. 📋 When a matching Student ID is found, the system extracts full name, department, and payment status for multiple academic years.  
+4. 🌟 Frontend displays:  
+   - ✅ "PAID" or ❌ "UNPAID" banner  
+   - 📘 Payment history  
+   - 👤 Student's personal info.
 
-1. User enters Student ID and submits query.  
-2. Script normalizes input and searches each department sheet from row 6 onward, looking for an ID match in column B.  
-3. On matching row, extracts student's full name, department, payment years/status, and compiles the result.  
-4. Frontend displays:  
-   - Banner ("PAID" or "UNPAID")  
-   - Payment history (all years)  
-   - Student’s info  
+***
 
----
+## Error Handling ⚠️
 
-## Error Handling
+- ❌ Invalid or empty Student ID returns an error.  
+- 🕵️ No match in any department sheet returns a "not found" message.  
+- 🐞 Unexpected errors are logged and display a friendly message.  
+- 🎭 Frontend shows animated feedback (shaking box and emoji rain for unpaid, confetti for paid).
 
-- **Invalid Student ID:** Returns error for empty/invalid input.  
-- **Record not found:** Returns error if Student ID not in any department sheet.  
-- **Script/Spreadsheet errors:** Displays generic error and logs stack for debugging.  
-- **Frontend:** Shows clear, animated error feedback for failed lookups.
+***
 
----
+## Debug and Utility Functions 🛠️
 
-## Debug and Utility Functions
+- `debugShowSheetStructure()` — Logs column headers for verification.  
+- `debugListAllStudentIds()` — Lists a sample of student IDs.  
+- `debugTestMultipleIds()` — Tests multiple IDs in batch.
 
-- `debugShowSheetStructure()` — Logs columns and headers for sheet verification.  
-- `debugListAllStudentIds()` — Lists sample IDs for testing.  
-- `debugTestMultipleIds()` — Bulk lookup testing.
+***
 
----
+## Additional Features 🎁
 
-## Additional Features
+- Fee breakdown panel with clear amounts.  
+- Reminder notes for receipt distribution and validation.  
+- Links to CSC/USC official social media.  
+- Interactive animations with confetti and emoji rain.  
+- Dark mode toggle for accessibility.
 
-- Clear fee breakdown panel.  
-- Receipt/validation reminders.  
-- Links to CSC/USC pages.  
-- Confetti and emoji rain for status feedback.  
-- Dark mode switch.  
-- Login utilities (if needed).
+***
 
----
+## Usage Instructions 📖
 
-## Usage Instructions
+1. Open the AutoTrack web app.  
+2. Enter your Student ID (e.g., "2025-01-12345").  
+3. Click **Check** or hit Enter.  
+4. View your payment status and history.
 
-1. Open the app’s site.  
-2. Enter a valid Student ID (e.g., "2025-01-12345").  
-3. Click "Check" or press Enter.  
-4. See payment status and history.
+***
 
----
+## How to Duplicate & Set Up for Another Organization 🔄
 
-## How to Duplicate & Set Up for Another Organization
+- **Make a copy** of the Google Spreadsheet.  
+- **Rename sheets and update data** to match your own departments and student payment statuses.  
+- **Ensure headers** are on rows 1-5; data starts at row 6.  
+- **Customize frontend text** for fees and contact info in the HTML.  
+- **Update the Apps Script to use your Spreadsheet ID:**  
+  ```js
+  const ss = SpreadsheetApp.openById("YOUR_NEW_SPREADSHEET_ID");
+  ```
+- **Edit department sheet names** in the script if changed.  
+- **Deploy as a new web app** with appropriate access.  
+- Optionally, set up a **CREDENTIALS** sheet for login.  
+- Share your new web app URL with your users.
 
-**To use this system for a different college/organization:**
+***
 
-1. **Make a Copy of the Google Spreadsheet**  
-   - Go to the original payments spreadsheet.  
-   - In Google Sheets: File → Make a copy.  
-   - Rename it as needed for your organization.
+## Deployment Guide 🚀
 
-2. **Edit Department Sheets**  
-   - Change sheet names to match your organization’s department codes.  
-   - Fill in student lists and payment statuses using the provided column structure.
+1. Prepare copied/configured Spreadsheet.  
+2. Paste backend script, update Spreadsheet ID and sheets array.  
+3. Deploy script as a new web app.  
+4. Serve frontend via `doGet()` or host separately for branding.  
+5. Share URL.
 
-3. **Update Headers**  
-   - Make sure rows 1–5 are headers for all sheets.  
-   - Data should start at row 6.
+***
 
-4. **Adjust Fees and Info Board**  
-   - In the HTML, modify the “About” or info-board section to show your own fee breakdown and organizational contact details.
+## Contact and Support 📞
 
-5. **Configure Google Apps Script**  
-   - Open Extensions → Apps Script in your new copy of the spreadsheet.  
-   - Paste in the backend code.  
-   - Change the `SpreadsheetApp.openById("...")` call to use your copied Spreadsheet’s ID.  
-     Example:  
-     ```
-     const ss = SpreadsheetApp.openById("YOUR_NEW_SPREADSHEET_ID_HERE");
-     ```  
-   - Edit department sheet names in the `departmentSheets` array if you changed them.
+- Bicol University students can contact via [CSC Facebook page](https://www.facebook.com/cengcsc).  
+- Other organizations should update contact details accordingly.
 
-6. **Deploy the Web App**  
-   - Deploy the script as a new web app (see Deployment Guide below).  
-   - Anyone with the link can use your unique system.
+***
 
-7. **(Optional) Set Up CREDENTIALS Sheet**  
-   - If needed for login/registration, add a “CREDENTIALS” sheet for usernames and passwords.  
-   - Match script expectations for column layout.
+## Example Result Object (from backend) 📦
 
-8. **Share the Web App Link**  
-   - Distribute your unique deployment link to your users.
-
----
-
-## Deployment Guide
-
-1. **Spreadsheet Setup**  
-   - Create/copy and configure the Google Sheet as above.
-
-2. **Apps Script**  
-   - Open script editor, set up backend code, update Spreadsheet ID and department sheet names.
-
-3. **Web App Deployment**  
-   - In Apps Script: Deploy → New deployment → Web app.  
-   - Set "Who has access" to "Anyone" (or "Anyone with link").  
-   - Deploy.
-
-4. **Frontend**  
-   - Served by Apps Script `doGet`, or host standalone HTML for custom branding.  
-   - Upload this documentation as `README.md` for future maintainers.
-
----
-
-## Contact and Support
-
-For Bicol University students:  
-Reach out at [CSC Facebook page](https://www.facebook.com/cengcsc).
-
-For other organizations:  
-Replace contact details in the frontend HTML/info board section as needed.
-
----
-
-## Example Result Object (from backend)
+```json
 {
-"id": "2025-01-17282",
-"name": "Dela Cruz, Juan, S.",
-"department": "EE",
-"row": 12,
-"status": "PAID",
-"history": {
-"AY 2022–2023": "PAID",
-"AY 2023–2024": "PAID",
-"AY 2024–2025": "UNPAID",
-"AY 2025–2026": "PAID"
+  "id": "2025-01-17282",
+  "name": "Dela Cruz, Juan, S.",
+  "department": "EE",
+  "row": 12,
+  "status": "PAID",
+  "history": {
+    "AY 2022–2023": "PAID",
+    "AY 2023–2024": "PAID",
+    "AY 2024–2025": "UNPAID",
+    "AY 2025–2026": "PAID"
+  }
 }
-}
+```
 
+***
 
----
+## Notes and Limitations 📝
 
-## Notes and Limitations
+- Only Student IDs in the spreadsheet will return results.  
+- Column and sheet structures must be maintained.  
+- Update academic years as needed.  
+- Login system requires separate setup.
 
-- The system only checks IDs present in your spreadsheet.  
-- All department sheets and columns must match the structure above.  
-- Update year columns as new academic years are added.  
-- Login functions require an extra CREDENTIALS sheet.
+***
 
----
-
-## License
+## License 📜
 
 MIT License
 
@@ -244,3 +205,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
 SOFTWARE.
 
+***
